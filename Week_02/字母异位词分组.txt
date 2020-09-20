@@ -1,0 +1,23 @@
+public class Solution {
+    public IList<IList<string>> GroupAnagrams(string[] strs) {
+        if (strs ==  null || strs.Length == 0)
+            return null;
+        Dictionary<string, List<string>> dict = new Dictionary<string, List<string>>();
+        foreach(var item in strs) {
+            int[] temp = new int[26];
+            foreach(var charitem in item) {
+                temp[charitem - 'a']++;
+            }
+            StringBuilder key = new StringBuilder("");
+            foreach(var nums_item in temp) {
+                key.Append("#");
+            }
+            string Key = key.ToString();
+            if (dict.ContainsKey(Key))
+                dict[Key].Add(item);
+            else
+                dict.Add(Key, new List<string>() { item});
+        }
+        return new List<IList<string>>(dict.Values);
+    }
+}
