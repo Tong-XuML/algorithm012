@@ -1,0 +1,33 @@
+public class Solution {
+    public IList<IList<int>> Combine(int n, int k) {
+        var ans = new List<IList<int>>();
+        //BackTrack(new List<int>(), k, 1, n, ans);
+        //迭代法
+        var path = new List<int>();
+        for(int j = 0; j < k ; j++) path.Add(0);
+        int i = 0;
+        while(i>=0){
+            path[i] = path[i]+1;
+            if(path[i] > n) i--;
+            else if(i == k-1) ans.Add(new List<int>(path));
+            else{
+                i++;
+                path[i] = path[i-1];
+            }
+        }
+        return ans;
+    }
+
+    //回溯法
+    public void BackTrack(List<int> path, int k, int start, int n, List<IList<int>> res){
+        if(path.Count == k){
+            res.Add(new List<int>(path));
+            return;
+        }
+        for(int i = start; i <= n; i++){
+            path.Add(i);
+            BackTrack(path, k, i+1, n, res);
+            path.Remove(i);
+        }
+    }
+}

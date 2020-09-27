@@ -1,0 +1,37 @@
+public class Solution
+{
+    private IDictionary<int, TreeNode> _parents = new Dictionary<int, TreeNode>();
+    public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+    {
+        SearchParents(root);
+        var set = new HashSet<TreeNode>();
+        var node = p;
+        while (node != root)
+        {
+            set.Add(node);
+            node = _parents[node.val];
+        }
+        node = q;
+        while (node != root)
+        {
+            if (set.Contains(node)) return node;
+            node = _parents[node.val];
+        }
+        return root;
+    }
+
+    private void SearchParents(TreeNode node)
+    {
+        if (node == null) return;
+        if (node.left != null)
+        {
+            _parents.Add(node.left.val, node);
+            SearchParents(node.left);
+        }
+        if (node.right != null)
+        {
+            _parents.Add(node.right.val, node);
+            SearchParents(node.right);
+        }
+    }
+}
