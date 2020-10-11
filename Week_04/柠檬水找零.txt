@@ -1,0 +1,42 @@
+public class Solution
+{
+    public bool LemonadeChange(int[] bills)
+    {
+        int fiveD = 0, tenD = 0, twityD = 0;
+        for(int i = 0; i < bills.Length; i++)
+        {
+            if(bills[i] == 5)
+            {
+                fiveD++;
+            }else if(bills[i] == 10)
+            {
+                if (fiveD < 1)
+                {
+                    return false;
+                }
+                else
+                {
+                    fiveD--;
+                    tenD++;
+                }
+            }else if(bills[i] == 20)
+            {
+                if (tenD > 0 && fiveD > 0)
+                {
+                    tenD--;
+                    fiveD--;
+                    twityD++;
+                }
+                else if(tenD == 0&&fiveD>=3)
+                {
+                    fiveD -= 3;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}

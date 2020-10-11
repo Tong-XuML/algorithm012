@@ -1,0 +1,34 @@
+public int FindContentChildren(int[] childs, int[] cookies) {
+    int count = 0;
+    int childIndex = -1;
+    int maxValue = int.MaxValue;
+    for (int i = 0; i < cookies.Length; i++)
+    {
+        for (int j = 0; j < childs.Length; j++)
+        {
+            if (childs[j] > 0)
+            {
+                int value = cookies[i] - childs[j]; // >=0满足孩子 child一定>0
+                if (value == 0) // 饼干一定被吃了 吃饼干的小朋友也确定了
+                {
+                    childIndex = j; // 找到小朋友
+                    break;
+                }
+                else if (value > 0 && value < maxValue) // 饼干一定被吃了
+                {
+                    childIndex = j; // 找到小朋友
+                    maxValue = value;
+                }
+            }
+        }
+
+        if (childIndex > -1)
+        {
+            childs[childIndex] = 0; // 去除小朋友
+            childIndex = -1; // 重置索引
+            maxValue = int.MaxValue; // 重置最大值
+            count++;
+        }
+    }
+    return count;
+}
