@@ -1,0 +1,46 @@
+    public int MaximalSquare(char[][] matrix)
+        {
+            int m = matrix.Length;
+            if (m == 0)
+                return 0;
+            int n = matrix[0].Length;
+            int maxLength = Math.Min(m, n);
+            bool[][] dp = new bool[m][];
+
+            bool hasValid = false;
+
+            for (int i = 0; i < m; i++)
+            {
+                dp[i] = new bool[n];
+                for (int j = 0; j < n; j++)
+                {
+                    dp[i][j] = matrix[i][j] == '1';
+                    if (dp[i][j])
+                        hasValid = true;
+                }
+            }
+            if (!hasValid)
+                return 0;
+
+            int res = 1;
+            for(int l = 2; l < maxLength;  l++)
+            {
+                hasValid = false;
+                for (int i = 0; i <= m-l; i++)
+                {
+                    for (int j = 0; j <= n-l; j++)
+                    {
+                        dp[i][j] = dp[i][j] && dp[i + 1][j + 1] && dp[i + 1][j] && dp[i][j + 1];
+                        if (dp[i][j])
+                            hasValid = true;
+                    }
+                }
+
+                if (hasValid)
+                    res++;
+                else
+                    return res * res;
+            }
+
+            return res*res;
+        }

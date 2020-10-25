@@ -1,0 +1,27 @@
+public class Solution {
+    public int MinPathSum(int[][] grid) {
+		if (grid == null || grid.Length == 0)
+		{
+			return 0;
+		}
+		int m = grid.Length;
+		int n = grid[0].Length;
+		//遍历grid数组，动态规划计算每个格子的最小值
+		for (int x = 0; x < m; x++){
+			for (int y = 0; y < n; y++){
+				if(x == 0 && y == 0){continue;}
+				int curMin = -1;
+				//从当前格子的上边和左边的格子里选出最小值并与当前格相加
+				if (x-1>=0 && y-1>=0){
+					curMin = Math.Min(grid[x-1][y],grid[x][y-1]);
+				}
+				else{
+					curMin = x-1>=0?grid[x-1][y]:grid[x][y-1];
+				}
+				grid[x][y] = curMin+grid[x][y];
+			}
+		}
+		//输出终点计算出的值即为路径最小值
+		return grid[m-1][n-1];
+    }
+}
