@@ -1,0 +1,13 @@
+public class Solution
+{
+    public int HammingWeight(uint n)
+    {
+        var r = 0;
+        while (n != 0)
+        {
+            r++;
+            n &= n - 1;
+        }
+        return r;
+    }
+}
